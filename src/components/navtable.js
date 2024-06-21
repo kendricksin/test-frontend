@@ -1,31 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './NavTable.css';
 
 function NavTable() {
-  const distances = Array.from({ length: 11 }, (_, i) => 10 - i); // [10, 9, 8, ... , 0]
-  const marks = ["Mark1", "Mark2", "Mark3", "Mark4"];
-  const initialData = distances.map(distance => ({
-    distance,
-    marks: marks.reduce((acc, mark) => ({ ...acc, [mark]: '000' }), {})
-  }));
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/data');
+        setData(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <table>
       <thead>
         <tr>
           <th>Distance</th>
-          {marks.map(mark => (
-            <th key={mark}>{mark}</th>
-          ))}
+          <th>Mark1</th>
+          <th>Mark2</th>
+          <th>Mark3</th>
+          <th>Mark4</th>
         </tr>
       </thead>
       <tbody>
-        {initialData.map(row => (
-          <tr key={row.distance}>
-            <td>{row.distance}</td>
-            {marks.map(mark => (
-              <td key={mark}>{row.marks[mark]}</td>
-            ))}
+        {data.map((row, index) => (
+          <tr key={index}>
+            <td>{row.Distance}</td>
+            <td>{row.Mark1}</td>
+            <td>{row.Mark2}</td>
+            <td>{row.Mark3}</td>
+            <td>{row.Mark4}</td>
           </tr>
         ))}
       </tbody>

@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import header from './components/header';
-import navtable from './components/navtable';
+import Header from './components/Header';
+import NavTable from './components/NavTable';
 
 function App() {
   return (
     <div className="App">
-      <header />
-      <navtable />
+      <Header />
+      <NavTable />
     </div>
   );
 }

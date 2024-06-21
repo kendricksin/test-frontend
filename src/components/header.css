@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .header-item {
+    background-color: #3c8dbc;
+    color: white;
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  

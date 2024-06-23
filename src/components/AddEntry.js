@@ -29,7 +29,7 @@ const AddEntry = () => {
     
     setError('');
     
-    fetch('http://localhost:3001/api/navtable', {
+    fetch('http://localhost:3001/bearings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

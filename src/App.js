@@ -5,22 +5,24 @@ import Header from './components/Header';
 import NavTable from './components/NavTable';
 import AddEntry from './components/AddEntry';
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <div className="App">
-        <Header />
+      <div>
         <nav>
-          <Link to="/">Home</Link>
-          <Link to="/add-entry">Add Entry</Link>
+          <ul>
+            <Header />
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/add-entry">Add Entry</Link></li>
+          </ul>
         </nav>
         <Routes>
-          <Route exact path="/" component={NavTable} />
-          <Route path="/add-entry" component={AddEntry} />
+          <Route path="/" element={<NavTable />} />
+          <Route path="/add-entry" element={<AddEntry />} />
         </Routes>
       </div>
     </Router>
   );
-}
+};
 
 export default App;

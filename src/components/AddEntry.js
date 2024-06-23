@@ -21,13 +21,14 @@ const AddEntry = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simple validation
+    
     if (!formData.Distance || !formData.Mark1 || !formData.Mark2 || !formData.Mark3 || !formData.Mark4) {
       setError('All fields are required');
       return;
     }
+    
     setError('');
-    // Perform the API call to submit the form data
+    
     fetch('http://localhost:3001/api/navtable', {
       method: 'POST',
       headers: {
@@ -35,23 +36,30 @@ const AddEntry = () => {
       },
       body: JSON.stringify(formData)
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          alert('Entry added successfully');
-          // Clear the form
-          setFormData({
-            Distance: '',
-            Mark1: '',
-            Mark2: '',
-            Mark3: '',
-            Mark4: ''
-          });
-        }
-      })
-      .catch(error => setError('Error adding entry'));
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        alert('Entry added successfully');
+        setFormData({
+          Distance: '',
+          Mark1: '',
+          Mark2: '',
+          Mark3: '',
+          Mark4: ''
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      setError('Error adding entry. Please try again later.');
+    });
   };
 
   return (
